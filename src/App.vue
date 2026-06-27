@@ -15,6 +15,6 @@ const goBackParent = () => {
 </script>
 
 <template>
-  <a v-show="route.path !== '/'" @click="goBackParent">...</a>
-  <RouterView class="m-2" />
+  <a class="cursor-pointer hover:bg-gray-300 " v-show="route.path !== '/'" @click="goBackParent">...</a>
+  <RouterView class="m-16 lg:w-1/3 lg:mx-auto" />
 </template>

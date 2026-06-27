@@ -10,14 +10,16 @@ import HomeContent from '../components/HomeContent.vue'
         <ul>
           <li><RouterLink to="/projects">Projects</RouterLink></li>
           <li><RouterLink to="/hobbies">Hobbies</RouterLink></li>
-          <li><RouterLink to="/skills">Skills</RouterLink></li>
-          <li><RouterLink to="/contact">Contact</RouterLink></li>
           <li><RouterLink to="/blog">Blog</RouterLink></li>
-          <li><RouterLink to="/links">Links</RouterLink></li>
-          <li><RouterLink to="/resume">Resume</RouterLink></li>
-          <li><RouterLink to="/gallery">Gallery</RouterLink></li>
-          <li><RouterLink to="/test">Music</RouterLink></li>
-          <li><RouterLink to="/contact">Contact</RouterLink></li>
+        </ul>
+  </section>
+  <section>
+        <h2>Contact</h2>
+        <p>Despite not being active on social media, here are ways to get in touch:</p>
+        <ul>
+          <li><a href="mailto:e07734maxime@proton.me">Mail-me</a></li>
+          <li><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://discord.com/users/680737784730091522" target="_blank" rel="noopener noreferrer">Discord</a></li>
         </ul>
   </section>
   </main>
