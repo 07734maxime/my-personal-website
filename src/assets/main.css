@@ -1,6 +1,5 @@
 @layer theme, base, components, utilities;
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss";
 
 p {
     @apply text-justify
@@ -8,4 +7,31 @@ p {
 
 * {
     @apply box-border
+}
+
+@theme {
+    --font-display: "Syne", sans-serif;
+    --font-mono: "Kode Mono", monospace;
+    --font-sans: "Inter", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-black
+}
+
+/* Apply the squared background to the whole page */
+html, body, #app {
+  @apply h-full
+}
+
+body {
+  background-color: #f4e3ff; /* light gray background */
+  background-image:
+    linear-gradient(to right, rgb(220, 193, 255) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 193, 255) 1px, transparent 1px);
+  background-size: 5rem 5rem; /* size of the squares */
+}
+
+.tech-icon  {
+    @apply h-12 w-12 rounded-xs flex items-center justify-center hover:bg-orange-200
 }
