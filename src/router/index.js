@@ -42,8 +42,8 @@ const router = createRouter({
     },
     {
       name: "Japanese Alphabet",
-      path: "/stuff/japanese-alphabet",
-      component: () => import("../views/stuff/JapaneseAlphabetView.vue"),
+      path: "/misc/japanese-alphabet",
+      component: () => import("../views/misc/JapaneseAlphabetView.vue"),
     },
     {
       name: "Misc",

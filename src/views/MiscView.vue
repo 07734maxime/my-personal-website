@@ -1,22 +1,39 @@
-<template>
-    <main>
-        <h1>{{ route.name }}</h1>
-        <p>
-            Creating a website is a major problem for me. I have a lot of ideas, I want to experiment a lot of new things but I always don't know how to implement them,
-            or the final render is not what I expected. This is why, this time, I've decided to almost not use CSS. This is really sad, and I'll try to maintain this website
-            and update the CSS regulary, or completely change the design.
-        </p>
-        <p>The main idea I was is to make a horizontal website, but using it on phone would've been pure chaos. I wanted to make too a "messy" design, like
-            <a href="https://yvettesbridalformal.p1r8.net/" target="_blank" rel="noopener noreferrer">this website</a>, but I don't think this was a good idea to show myself.
-            So, i might create another website with this kind of design. I might just orient this website design to be more conventional, and maybe use a brutalist design.
-        </p>
-        <p>By the way, this page was supposed to be empty, I just added content there because I didn't know where to put it. Feel free to navigate to 
-            <RouterLink to="/stuff/japanese-alphabet">this page</RouterLink> (the reason why this page exists).
-        </p>
-    </main>
-</template>
-
 <script setup>
-import { useRoute } from 'vue-router';
+import AboutBox from '@/components/boxes/AboutBox.vue';
+import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
+const miscRoutes = ref(router.getRoutes().filter(route => route.path.startsWith("/misc/")));
+
 const route = useRoute();
+
 </script>
+
+<template>
+  <main class="flex flex-col gap-4">
+    <h1 class="highlight-title rotate-2 text-3xl">{{ route.name }}</h1>
+
+    <AboutBox>
+        Stuff related to other pages, that are not referenced in the main navigation. Might add other things later.
+    </AboutBox>
+
+    <section class="flex flex-col gap-3">
+      <h2 class="text-xl highlight-title -rotate-1">Navigation</h2>
+      <ul class="flex flex-col gap-2 list-none p-0">
+
+        <li v-for="route in miscRoutes" :key="route.path" :to="route.path"
+          class="bg-purple-300 p-2 border border-2 rounded-tr rounded-bl flex flex-col gap-3 solid-shadow-3">
+
+          <div class="flex justify-between items-center">
+            <span class="font-bold font-mono">{{ route.name }}</span>
+            <RouterLink :to="route.path"
+              class="bg-black p-2 text-white hover:bg-gray-700 w-fit ml-auto font-mono text-sm">Go <i
+                class="fas fa-arrow-right"></i></RouterLink>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+  </main>
+</template>

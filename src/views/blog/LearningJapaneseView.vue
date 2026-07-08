@@ -1,13 +1,15 @@
 <template>
-    <main>
-        <h1>{{ route.name }}</h1>
-            <p class="italic">Note: You will need to have suitable fonts installed to properly display Japanese characters.</p>
+    <main class="flex flex-col gap-3">
+        <h1 class="highlight-title rotate-1 text-3xl">{{ route.name }}</h1>
+        <AboutBox>
+            You will need to have suitable fonts installed to properly display Japanese characters.
+        </AboutBox>
             <p>From a simple idea to a concrete project, I will relate my path of learning Japanese.
                 First of all, you may wonder why would I want to learn Japanese ? Well, there is no reason.
                 I have ease to learn languages, but it was never used except for English, and I wanted to learn once a non-latin / non-germanic language.
                 This combined with my interest with Japanese culture made me start learning.
             </p>
-        <h2>Context</h2>
+        <h2 class="highlight-title -rotate-1" >Context</h2>
             <p>My plan to learn Japanese started when I was 15. Although I did not know where to start, so I basically gave up really really fast, even though
                 I haven't forgotten this idea. Time flew by, I'm not 20. It's been 5 years, and I just continually thanks my old me about for not forgetting.
                 Thus, I've really started learning Japanese this year, in 2026. Even if this was probably not optimal, due to my lack of time caused by my studies,
@@ -67,8 +69,11 @@
                 You may have deduced that this is not the complete alphabet, and you're right. There are also consonants that can be combined with these vowels to form syllables.
                 You can use consonants like k, s, t, n, h, m, y, r, and w to form syllables like ka (<span class="font-bold">か</span>), shi (<span class="font-bold">し</span>), tsu (<span class="font-bold">つ</span>), ne (<span class="font-bold">ね</span>), ho (<span class="font-bold">ほ</span>)...
             </p>
-            <p class="p-2 border text-red-500 text-xl font-semibold">I've created a page so you can explore the full Japanese alphabet. If you want to learn more, <RouterLink class="text-xl" to="/stuff/japanese-alphabet">click here</RouterLink></p>
-        <h2>How is learning Japanese?</h2>
+            <AboutBox>
+                I've created a page so you can explore the full Japanese alphabet. If you want to learn more,
+                <RouterLink class="bg-orange-200 hover:underline" to="/stuff/japanese-alphabet">click here</RouterLink>
+            </AboutBox>
+        <h2 class="highlight-title rotate-0.5">How is learning Japanese?</h2>
             <p>In <a href="https://www.youtube.com/watch?v=tkFOBx6j0l8" target="_blank" class="hover:underline italic no-underline text-black">two words</a>: really hard.</p>
             <p>Unironically, what makes Japanese hard is not even the writing system. It's very easy to learn, and pronunciation is really straightforward, even a 2-year-old can learn it.
                 Japanese grammar is also not that complicated, it's basically a SOV system : subject-object-verb. It can be complex the first time when you always used a SVO system as I,
@@ -85,7 +90,7 @@
             It's basically a test to measure your Japanese language skills, as a foreigner. This test is divided into several levels, starting from N5 (beginner) to N1 (advanced).
             <span class="text-red-600">Currently, I'm preparing for the JLPT N5.</span> I'd say before my break, it was going well, but this is the first time
             that I'm really slow to learn something.</p>
-        <h2>Let's talk about Kanji</h2>
+        <h2 class="highlight-title -rotate-1">Let's talk about Kanji</h2>
             <p>As said previously, Kanji are used to represent ideas and concepts, rather than sounds.
                 This means that each Kanji character has a specific meaning, and you have to learn both the reading and the meaning of each character.
                 Also, there is two readings for each Kanji character, the <span class="italic">On'yomi</span> (<span class="font-bold">音読み</span>) and the <span class="italic">Kun'yomi</span> (<span class="font-bold"> 訓読み</span>).
@@ -97,18 +102,36 @@
                 </ul>
                 <p>As you may have noticed, Japanese have a lot of common sounds for different words, different meanings, so Kanji are there to represent the different meaning through an image, an idea to exactly deduce the context of the conversation.</p>
             </p>
-        <h2>Japanese Grammar</h2>
-        <p>I'll be short on that one : Japanese grammar is actually not that hard once you get the hang of it. As said earlier,
+        <h2 class="highlight-title -rotate-1">Japanese Grammar</h2>
+        <p>
+            Japanese grammar is actually not that hard once you get the hang of it. As said earlier,
             it's all bout understanding the SOV system, and how to "conjugate" verbs (because this is reammy easy). I think the best thing to do is to train
             regularly, and try to understand the logic behind all that instead of learning by heart.
+
         </p>
-        <hr class="my-6" />
-        <h2>What I've Learned</h2>
+        <h2 class="highlight-title rotate-1">What I've Learned</h2>
         <p>To be continued...</p>
     </main>
 </template>
 
 <script setup>
+import AboutBox from '@/components/boxes/AboutBox.vue';
 import { useRoute } from 'vue-router';
+import { onMounted, onUnmounted } from 'vue';
+import DefaultBox from '@/components/boxes/DefaultBox.vue';
 const route = useRoute();
+
+// add a body class when this view is mounted so we can style the navbar only for this view
+onMounted(() => document.body.classList.add('view-learning-japanese'))
+onUnmounted(() => document.body.classList.remove('view-learning-japanese'))
 </script>
+
+<!-- <style scoped>
+main {
+  background-color: #ffaeb6; /* light gray background */
+  background-image:
+    linear-gradient(to right, #ca838a 1px, transparent 1px),
+    linear-gradient(to bottom, #ca838a 1px, transparent 1px);
+  background-size: 5rem 5rem; /* size of the squares */
+}
+</style> -->
