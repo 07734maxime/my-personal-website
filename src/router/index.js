@@ -27,13 +27,13 @@ const router = createRouter({
       path: "/blog/rust-impressions",
       name: "First impressions about Rust",
       component: () => import("../views/blog/RustImpressionsView.vue"),
-      meta: { date: "2023-01-01", description: "I'll talk about my first impressions of Rust here! I tried to implement linear algebra in my first project!", tags: [{label: "rust", color: "bg-rust"}, {label: "programming", color: "bg-green-500"}, {label: "maths", color: "bg-red-500"}] },
+      meta: { date: "2026-01-01", description: "I'll talk about my first impressions of Rust here! I tried to implement linear algebra in my first project!", tags: [{label: "rust", color: "bg-rust"}, {label: "programming", color: "bg-green-500"}, {label: "maths", color: "bg-red-500"}] },
     },
     {
       path: "/blog/learning-japanese",
       name: "My experience learning Japanese",
       component: () => import("../views/blog/LearningJapaneseView.vue"),
-      meta: { date: "2023-01-02", description: "Why I decided to learn Japanese? What have I learned so far? I'll share my experience here!", tags: [{label: "japanese", color: "bg-red-500"}, {label: "language", color: "bg-indigo-500"}] },
+      meta: { date: "2026-01-01", description: "Why I decided to learn Japanese? What have I learned so far? I'll share my experience here!", tags: [{label: "japanese", color: "bg-red-500"}, {label: "language", color: "bg-indigo-500"}] },
     },
     {
       name: "Not Found",
