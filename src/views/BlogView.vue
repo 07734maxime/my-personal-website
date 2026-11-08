@@ -1,64 +1,57 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter,useRoute } from 'vue-router';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import PageTitle from '@/components/PageTitle.vue';
 import UncompleteBox from '@/components/boxes/UncompleteBox.vue';
+
 const router = useRouter();
-const blogRoutes = ref(router.getRoutes().filter(route => route.path.startsWith("/blog/")));
+const posts = router.getRoutes()
+  .filter(route => route.path.startsWith("/blog/"))
+  .sort((a, b) => (b.meta.date || '').localeCompare(a.meta.date || ''));
+
 const query = ref('');
-const filteredRoutes = computed(() => {
+const filteredPosts = computed(() => {
   const q = query.value.trim().toLowerCase();
-  if (!q) return blogRoutes.value;
-  return blogRoutes.value.filter(r => {
-    const name = (r.name || '').toString().toLowerCase();
-    const desc = ((r.meta && r.meta.description) || '').toString().toLowerCase();
-    const tags = (r.meta && r.meta.tags) ? r.meta.tags.map(t => (t.label||t).toString().toLowerCase()).join(' ') : '';
+  if (!q) return posts;
+  return posts.filter(r => {
+    const name = String(r.name || '').toLowerCase();
+    const desc = String(r.meta.description || '').toLowerCase();
+    const tags = (r.meta.tags || []).map(t => t.label.toLowerCase()).join(' ');
     return name.includes(q) || desc.includes(q) || tags.includes(q);
   });
 });
-
-const route = useRoute();
-
 </script>
 
 <template>
-  <main class="flex flex-col gap-12">
-    <h1 class="highlight-title rotate-2 text-3xl">{{ route.name }}</h1>
+  <main>
+    <PageTitle>Notes on what I'm learning: programming, maths, Japanese.</PageTitle>
 
-    <section class="flex flex-col gap-3">
-      <h2 class="text-xl highlight-title -rotate-1">Navigation</h2>
-      <div class="flex items-center gap-2">
-        <input v-model="query" type="search" placeholder="Search posts..." class="p-2 font-bold bg-orange-200 w-full solid-shadow-3 rotate-1 active:bg-orange-300 hover:bg-orange-300 outline-none" />
-      </div>
-      <ul class="flex flex-col gap-2 list-none p-0">
+    <section>
+    <label class="mb-4 flex items-center gap-3 border-b border-line pb-2 focus-within:border-accent">
+      <span class="shrink-0 whitespace-nowrap text-xs text-accent">検索</span>
+      <input v-model="query" type="search" placeholder="Search posts, tags…"
+        class="w-full bg-transparent py-2 text-lg outline-none placeholder:text-muted" />
+    </label>
 
-        <li v-for="route in filteredRoutes" :key="route.path" :to="route.path"
-          class="bg-purple-300 p-2 border border-2 rounded-tr rounded-bl flex flex-col gap-3 solid-shadow-3">
-          <ul class="flex gap-2">
-            <li v-for="tag in (route.meta && route.meta.tags) || []" :key="tag" :class="tag.color"
-              class="select-none cursor-pointer text-white bg-gray-200 text-gray-800 text-xs px-2 py-1 uppercase font-mono font-bold">
-              {{ tag.label || tag }}
-            </li>
-
-          </ul>
-          <div>
-            <span class="font-bold font-mono">{{ route.name }}</span>
-            <p class="text-gray-700 text-sm">{{ route.meta.description }}</p>
+    <TransitionGroup tag="ul" name="list" class="relative flex flex-col">
+      <li v-for="post in filteredPosts" :key="post.path" class="border-t border-line">
+        <RouterLink :to="post.path"
+          class="group grid gap-x-6 gap-y-2 px-2 py-6 transition-colors duration-300 hover:bg-white/5 sm:grid-cols-[7rem_1fr]">
+          <time :datetime="post.meta.date" class="text-xs text-muted pt-2">{{ post.meta.date }}</time>
+          <div class="flex flex-col gap-2">
+            <h2 class="text-xl text-accent">{{ post.name }}</h2>
+            <p class="text-paper/70">{{ post.meta.description }}</p>
+            <ul class="flex flex-wrap gap-x-3 text-xs uppercase tracking-widest text-accent">
+              <li v-for="tag in post.meta.tags || []" :key="tag.label">#{{ tag.label }}</li>
+            </ul>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-500">{{ route.meta.date }}</span>
-            <RouterLink :to="route.path"
-              class="bg-black p-2 text-white hover:bg-gray-700 w-fit ml-auto font-mono text-sm">Read <i
-                class="fas fa-arrow-right"></i></RouterLink>
-          </div>
-        </li>
+        </RouterLink>
+      </li>
 
-          <li>
-            <UncompleteBox>{{ filteredRoutes.length ? "More soon!" : "No results found" }}</UncompleteBox>
-          </li>
-
-      </ul>
+      <li key="__more" class="border-t border-line pt-6">
+        <UncompleteBox>{{ filteredPosts.length ? "More posts soon" : "No results found" }}</UncompleteBox>
+      </li>
+    </TransitionGroup>
     </section>
-
   </main>
 </template>

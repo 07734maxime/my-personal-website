@@ -1,8 +1,5 @@
 <template>
-  <div class="flex gap-3 items-stretch">
-    <div class="w-1 bg-orange-300 flex-shrink-0"></div>
-    <h2 class="font-mono! text-xl">
-      <slot></slot>
-    </h2>
-  </div>
+  <h2 class="section-title heading mt-6 mb-1 text-xl">
+    <slot></slot>
+  </h2>
 </template>

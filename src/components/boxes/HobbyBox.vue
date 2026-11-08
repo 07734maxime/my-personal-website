@@ -1,42 +1,46 @@
+<!--
+  A favorite in the spotlight, then the rest of the shelf as a wall of covers (names show on hover).
+  Covers stay dim until hovered; entries without a cover are drawn as a labeled floppy disk. Entries with a url link out.
+-->
 <template>
-    <section class="flex flex-col gap-4 bg-purple-300 border border-2 rounded solid-shadow-5">
-        <hgroup class="flex justify-between items-center border-b p-2">
-            <div>
-                <i class="fa fa-heart text-red-500"></i>
+    <div class="flex flex-col gap-5">
+        <figure v-if="favorite" class="grid items-center gap-4"
+            :class="reversed ? 'sm:grid-cols-[1fr_minmax(0,11rem)]' : 'sm:grid-cols-[minmax(0,11rem)_1fr]'">
+            <div class="win w-2/3 sm:w-full" :class="reversed ? 'sm:order-2' : ''">
+                <div class="win-bar win-bar-accent"><span>★ FAVORITE</span><span aria-hidden="true">×</span></div>
+                <component :is="favorite.url ? 'a' : 'div'" v-bind="linkAttrs(favorite)" class="block">
+                    <img v-if="favorite.img && !missing.has(favorite.img)" :src="favorite.img" :alt="favorite.alt" loading="lazy" @error="missing.add(favorite.img)"
+                        class="aspect-[3/4] w-full object-cover" />
+                    <Floppy v-else :item="favorite" large />
+                </component>
             </div>
-            <span class="font-mono px-2">My favorite</span>
-        </hgroup>
+            <figcaption class="flex flex-col gap-3" :class="reversed ? 'sm:text-right sm:items-end' : ''">
+                <span class="kicker text-gold!">Favorite</span>
+                <component :is="favorite.url ? 'a' : 'span'" v-bind="linkAttrs(favorite)"
+                    class="font-display text-2xl" :class="{ 'hover:text-cyan': favorite.url }">{{ favorite.alt }}</component>
+                <span class="text-paper/70">「{{ favorite.note }}」</span>
+            </figcaption>
+        </figure>
 
-        <div :class="reversed ? 'flex-row-reverse' : 'flex-row'" class="cursor-pointer hover:scale-99 duration-150 transition-all m-2 flex gap-4 justify-center lg:justify-around items-center border border-2 p-2 rounded bg-white solid-shadow-3">
-            <img :src="favorite.img" :alt="favorite.alt"
-                class="aspect-[3/4] object-cover rounded border border-2 w-1/2 lg:w-1/3" />
-            <div class="flex flex-col ">
-                <span class="font-mono">{{ favorite.alt }}</span>
-                <span class="text-sm text-gray-600">{{  favorite.note }}</span>
-            </div>
+        <div>
+            <p class="kicker mb-2">{{ title }} · {{ list.length }} {{ list.length > 1 ? 'items' : 'item' }}</p>
+            <ul v-reveal.children class="grid grid-cols-4 gap-1.5 sm:grid-cols-6">
+                <li v-for="el in list" :key="el.alt">
+                  <component :is="el.url ? 'a' : 'div'" v-bind="linkAttrs(el)" :title="el.alt" class="group block">
+                    <div class="overflow-hidden border border-line transition-colors group-hover:border-accent">
+                        <img v-if="el.img && !missing.has(el.img)" :src="el.img" :alt="el.alt" loading="lazy" @error="missing.add(el.img)"
+                            class="aspect-[3/4] w-full object-cover opacity-70 saturate-50 transition duration-300 group-hover:opacity-100 group-hover:saturate-100" />
+                        <Floppy v-else :item="el" />
+                    </div>
+                  </component>
+                </li>
+            </ul>
         </div>
-
-        <hgroup class="flex justify-between items-center border-b border-t p-2">
-            <span class="font-mono px-2">{{ title }}</span>
-            <div>
-                <i class="fa fa-book"></i>
-            </div>
-        </hgroup>
-
-        <ul class="m-2 grid grid-cols-2 lg:grid-cols-4 auto-rows-max gap-2 ">
-            <li v-for="el in list" :key="el.alt" class="cursor-pointer hover:scale-99 duration-150 transition-all bg-white p-2 border border-2 rounded solid-shadow-3">
-                <img :src="el.img" :alt="el.alt"
-                    class="aspect-[3/4] w-full object-cover rounded outline outline-2 outline-black" />
-                <span class="w-full text-center">{{ el.alt }}</span>
-            </li>
-
-        </ul>
-
-    </section>
-
+    </div>
 </template>
 
 <script setup>
+import { h, reactive } from 'vue';
 
 defineProps({
     reversed: {
@@ -49,12 +53,27 @@ defineProps({
     },
     favorite: {
         type: Object,
-        required: true
+        default: null
     },
+    // [{ alt, img?, jp?, url? }]
     list: {
         type: Array,
         required: true
     }
 });
 
+// 3.5" floppy: metal shutter at the top, paper label with the title at the bottom
+const Floppy = (props) => h('div', { class: 'relative flex aspect-[3/4] w-full flex-col bg-line p-[10%]', 'aria-label': props.item.alt, role: 'img' }, [
+    h('div', { class: 'mx-auto h-[22%] w-[55%] bg-muted/70 p-[4%]' }, [h('div', { class: 'ml-auto h-full w-1/4 bg-ink' })]),
+    h('div', { class: 'mt-auto flex h-[48%] flex-col justify-between bg-paper p-[8%] text-ink' }, [
+        h('span', { class: `font-display leading-tight ${props.large ? 'text-2xl' : 'text-xs'}` }, props.item.jp || props.item.alt),
+        h('span', { class: 'border-t border-dashed border-ink/40 pt-0.5 font-display text-[8px] uppercase leading-tight text-ink/60 line-clamp-2' }, props.item.alt),
+    ]),
+]);
+Floppy.props = ['item', 'large'];
+
+// Covers that failed to load (e.g. not downloaded yet) are drawn as a floppy instead
+const missing = reactive(new Set());
+
+const linkAttrs = (item) => (item.url ? { href: item.url, target: '_blank', rel: 'noopener noreferrer' } : {});
 </script>

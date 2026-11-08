@@ -1,136 +1,83 @@
-<script setup lang="ts">
-import AboutBox from '@/components/boxes/AboutBox.vue';
+<script setup>
+import PageTitle from '@/components/PageTitle.vue';
+import SectionTitle from '@/components/SectionTitle.vue';
 import HobbyBox from '@/components/boxes/HobbyBox.vue';
+import CutCard from '@/components/CutCard.vue';
 
-const animanga = [
-  {
-    img: "/assets/img/anime/monogatari.jpg",
-    alt: "Monogatari Series"
-  },
-  {
-    img: "/assets/img/anime/monster.jpg",
-    alt: "Monster"
-  },
-  {
-    img: "/assets/img/anime/oshi_no_ko.webp",
-    alt: "Oshi no Ko"
-  },
-  {
-    img: "/assets/img/anime/evangelion.webp",
-    alt: "Evangelion"
-  },
-  {
-    img: "/assets/img/anime/aot.jpg",
-    alt: "Attack on Titan"
-  },
-  {
-    img: "/assets/img/manga/berserk.jpg",
-    alt: "Berserk"
-  },
-  {
-    img: "/assets/img/manga/20th_century_boys.jpg",
-    alt: "20th Century Boys"
-  },
-  {
-    img: "/assets/img/manga/fma.webp",
-    alt: "Fullmetal Alchemist"
-  },
-  {
-    img: "/assets/img/manga/vagabond.jpg",
-    alt: "Vagabond"
-  },
-  {
-    img: "/assets/img/manga/jjba.jpg",
-    alt: "JoJo's Bizarre Adventure"
-  }
-]
+import { reactive } from 'vue';
+import { hobbies } from '@/content';
 
-const albumList = [
-  {
-    img: "/assets/img/music/yeezus.png",
-    alt: "Yeezus"
-  },
-  {
-    img: "/assets/img/music/drukqs.jpg",
-    alt: "Drukqs"
-  },
-  {
-    img: "/assets/img/music/gusare.jpg",
-    alt: "Gusare"
-  },
-  {
-    img: "/assets/img/music/summer_flows_0_02.jpg",
-    alt: "summer flows 0.02"
-  },
-  {
-    img: "/assets/img/music/dummy.jpg",
-    alt: "Dummy"
-  }
-]
+// Lists come from content/hobbies.yaml
+const { animanga, novels, games, music } = hobbies;
 
-
+// Covers that failed to load (not downloaded yet) are replaced by a note
+const missing = reactive(new Set());
 </script>
 
 <template>
-  <main class="flex flex-col gap-12">
+  <main>
+    <PageTitle>
+      What I watch, read, play and listen to. Mostly strange, sometimes dark, always memorable.
+    </PageTitle>
 
-    <h1 class="highlight-title -rotate-2 text-3xl">My Hobbies</h1>
-
-    <section class="flex flex-col gap-4">
-
-      <h2 class="highlight-title rotate-1">Animanga</h2>
-
-      <AboutBox>
-        <p class="text-sm text-gray-700">
-          You can find my anime list <a class="highlight-link" href="https://myanimelist.net/animelist/maxime07734"
-            target="_blank" rel="noopener noreferrer">here</a> (even though it's outdated)
-        </p>
-      </AboutBox>
-
-      <HobbyBox :title="'Animanga shelf'"
-        :favorite="{ img: '/assets/img/anime/rezero.jpg', alt: 'Re:ZERO', note: 'Just read it, you\'ll understand why' }"
-        :list="animanga" />
-
+    <section v-reveal class="flex flex-col gap-4">
+      <SectionTitle>Anime, manga &amp; light novels</SectionTitle>
+      <HobbyBox title="Shelf" :favorite="animanga.favorite" :list="animanga.shelf" />
+      <HobbyBox v-if="animanga.next.length" title="Up next" :list="animanga.next" />
+      <p class="text-sm text-muted">
+        My full list is on <a class="link" href="https://myanimelist.net/animelist/maxime07734" target="_blank" rel="noopener noreferrer">MyAnimeList</a>
+        (even though it's outdated).
+      </p>
     </section>
 
+    <CutCard color="accent">ノベルゲーム</CutCard>
 
-    <section class="flex flex-col gap-4">
-
-      <h2 class="highlight-title -rotate-1">Video Games</h2>
-
-      <HobbyBox reversed :title="'Video Games Shelf'"
-        :favorite="{ img: '/assets/img/games/yume_nikki.jpg', alt: 'Yume Nikki', note: 'This is definitely the best walking simulator ever made.' }"
-        :list="[
-          { img: '/assets/img/games/saya_no_uta.jpg', alt: 'Saya no Uta' },
-          { img: '/assets/img/games/silent_hill_2.jpg', alt: 'Silent Hill 2' },
-          { img: '/assets/img/games/the_house_in_fata_morgana.png', alt: 'The House in Fata Morgana' },
-          { img: '/assets/img/games/ib.jpg', alt: 'Ib' }
-        ]" />
-
+    <section v-reveal class="flex flex-col gap-4">
+      <SectionTitle>Visual novels</SectionTitle>
+      <p class="text-paper/80">
+        Proud visual novel enjoyer. I've only finished a couple so far, but the backlog is getting serious.
+      </p>
+      <HobbyBox title="Read" :list="novels.read" />
+      <HobbyBox v-if="novels.backlog.length" title="Backlog" :list="novels.backlog" />
     </section>
 
-    <section class="flex flex-col gap-4">
+    <CutCard color="ink">夢日記</CutCard>
 
-      <h2 class="highlight-title -rotate-2">Music</h2>
+    <section v-reveal class="flex flex-col gap-4">
+      <SectionTitle>Video games</SectionTitle>
+      <HobbyBox reversed title="Shelf" :favorite="games.favorite" :list="games.shelf" />
+      <p class="text-sm text-muted">
+        Basically anything that feels like a bad dream: Yume Nikki-likes, Silent Hill, RPG Maker horror.
+      </p>
+    </section>
 
-      <article class="flex flex-col gap-4 solid-shadow-3 bg-purple-300 flex flex-col gap-4 p-2 border border-2">
-          <p class="font-mono px-2 text-sm text-gray-700">I honestly listen to all kinds of music</p>
-          
-          <AboutBox hideTitle>
-            <ul class="p-2 flex flex-col gap-2">
-              <li v-for="album in albumList" :key="album.alt" class="hover:scale-99 duration-150 transition-all cursor-pointer flex flex-col gap-2">
-                <div class="flex gap-2 items-center">
-                  <img class="solid-shadow-3 w-12 rounded-sm border" :src="album.img" :alt="album.alt" />
-                  <span class="font-mono">{{ album.alt }}</span>
-                </div>
-                <hr />
-              </li>
-            </ul>
-          </AboutBox>
+    <CutCard color="paper" vertical>音楽</CutCard>
 
-      </article>
+    <section v-reveal class="flex flex-col gap-6">
+      <SectionTitle>Music</SectionTitle>
+      <p class="text-paper/70">I honestly listen to all kinds of music. Currently on rotation:</p>
+      <ol class="win">
+        <li class="win-bar"><span>♪ PLAYLIST.M3U</span><span>{{ music.playlist.length }} tracks</span></li>
+        <li v-for="(album, i) in music.playlist" :key="album.alt" class="border-b-2 border-dotted border-line last:border-0">
+          <a :href="album.url" target="_blank" rel="noopener noreferrer"
+            class="group flex items-center gap-4 px-3 py-2 hover:bg-white/5">
+            <span class="w-6 font-display text-xs text-muted group-hover:text-accent">{{ String(i + 1).padStart(2, '0') }}</span>
+            <img v-if="album.img && !missing.has(album.img)" class="h-12 w-12 object-cover saturate-50 group-hover:saturate-100" :src="album.img" alt="" loading="lazy"
+              @error="missing.add(album.img)" />
+            <span v-else class="flex h-12 w-12 items-center justify-center bg-ink-3 text-xl text-gold" aria-hidden="true">♪</span>
+            <span class="flex flex-col">
+              <span class="font-display text-lg leading-tight">{{ album.alt }}</span>
+              <span class="text-xs text-muted">{{ album.artist }}</span>
+            </span>
+            <span class="ml-auto hidden font-display text-xs text-accent group-hover:inline" aria-hidden="true">▶ PLAY</span>
+          </a>
+        </li>
+      </ol>
+      <p class="text-paper/70">
+        I also love soundtracks and calm, ambient stuff, the kind you put on to work or fall asleep.
+        C418's <a class="link" href="https://music.apple.com/fr/album/minecraft-volume-alpha/1867885113" target="_blank" rel="noopener noreferrer">Minecraft – Volume Alpha</a>
+        is the perfect example.
+      </p>
     </section>
   </main>
 </template>
-
-

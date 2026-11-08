@@ -1,7 +1,7 @@
 <!-- CodeBlock.vue -->
 <script setup>
 import { ref, onMounted } from 'vue';
-import { createHighlighter } from 'shiki';
+import { getHighlighter } from '@/utils/highlighter';
 
 const props = defineProps({
   lang: { type: String, default: 'rust' },
@@ -11,10 +11,7 @@ const props = defineProps({
 const highlightedCode = ref('');
 
 onMounted(async () => {
-  const highlighter = await createHighlighter({
-    themes: ['github-dark'],
-    langs: ['rust']
-  });
+  const highlighter = await getHighlighter([props.lang]);
   highlightedCode.value = highlighter.codeToHtml(props.code, {
     lang: props.lang,
     theme: 'github-dark',

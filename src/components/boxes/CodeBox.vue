@@ -1,22 +1,19 @@
 <script setup>
+import CodeBlock from '@/components/CodeBlock.vue';
+
 defineProps({
   lang: { type: String, default: 'rust' },
-  code: { type: String, required: true }
+  code: { type: String, required: true },
+  filename: { type: String, default: '' },
 });
 </script>
 
 <template>
-  <div class="select-none flex flex-col solid-shadow-3 rounded-lg bg-black">
-    <ul class="flex gap-1 bg-neutral-900 rounded-t-lg py-1 px-2">
-      <li><i class="fas fa-circle text-red-400"></i></li>
-      <li><i class="fas fa-circle text-orange-400"></i></li>
-      <li><i class="fas fa-circle text-green-400"></i></li>
-    </ul>
-    <CodeBlock :language="lang" :code="code" />
-  </div>
+  <figure class="win">
+    <figcaption class="win-bar">
+      <span>{{ filename }}</span>
+      <span class="uppercase tracking-widest">{{ lang }}</span>
+    </figcaption>
+    <CodeBlock :lang="lang" :code="code" />
+  </figure>
 </template>
-
-<script>
-import CodeBlock from '@/components/CodeBlock.vue';
-export default { components: { CodeBlock } };
-</script>

@@ -5,12 +5,13 @@ defineProps({
 </script>
 
 <template>
-  <li class="solid-shadow-3 flex flex-col p-2 bg-white border border-2 rounded-tl rounded-br">
-    <span class="font-mono flex flex-col text-center">
-      {{ title }} <slot name="formula" />
-    </span>
-    <span>
+  <li class="grid gap-2 border border-line bg-ink-2 p-4 sm:grid-cols-[12rem_1fr] sm:items-center">
+    <div class="flex flex-col gap-1">
+      <span class="kicker">{{ title }}</span>
+      <slot name="formula" />
+    </div>
+    <div class="overflow-x-auto">
       <slot name="result" />
-    </span>
+    </div>
   </li>
 </template>

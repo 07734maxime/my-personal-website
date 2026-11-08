@@ -1,0 +1,126 @@
+# Pages CMS (https://pagescms.org): a web interface to edit the files in /content.
+# Every save is a commit on GitHub, and Vercel redeploys the site.
+
+media:
+  input: public/assets/img
+  output: /assets/img
+
+content:
+  - name: hobbies
+    label: Hobbies
+    type: file
+    path: content/hobbies.yaml
+    format: yaml
+    fields:
+      - name: animanga
+        label: Anime, manga & light novels
+        type: object
+        fields:
+          - name: favorite
+            label: Favorite
+            type: object
+            # Reused by the games' favorite below
+            fields: &favorite-fields
+              - { name: title, label: Title, type: string, required: true }
+              - { name: note, label: Quote, type: string }
+              - { name: mal_anime, label: MyAnimeList anime id, type: number }
+              - { name: mal_manga, label: MyAnimeList manga id, type: number }
+              - { name: vndb, label: VNDB id, type: string }
+              - { name: steam, label: Steam app id, type: number }
+              - { name: image, label: Custom cover, type: image }
+              - { name: url, label: Custom link, type: string }
+          - name: shelf
+            label: Shelf
+            type: object
+            list: true
+            # Every item of the Hobbies page has these fields (reused below)
+            fields: &item-fields
+              - { name: title, label: Title, type: string, required: true }
+              - { name: mal_anime, label: MyAnimeList anime id, type: number, description: "The number in myanimelist.net/anime/2167. Gives the cover and the link." }
+              - { name: mal_manga, label: MyAnimeList manga id, type: number, description: "The number in myanimelist.net/manga/2. Gives the cover and the link." }
+              - { name: vndb, label: VNDB id, type: string, description: "Like v4 (vndb.org/v4). Gives the cover and the link." }
+              - { name: steam, label: Steam app id, type: number, description: "The number in store.steampowered.com/app/1091500. Gives the cover and the link." }
+              - { name: apple_music, label: Apple Music album id, type: number, description: "The number at the end of the album URL. Gives the cover and the link." }
+              - { name: image, label: Custom cover, type: image, description: "Only if the automatic cover is wrong or there is no id." }
+              - { name: url, label: Custom link, type: string, description: "Only if the automatic link is wrong or there is no id." }
+          - { name: next, label: Up next, type: object, list: true, fields: *item-fields }
+      - name: novels
+        label: Visual novels
+        type: object
+        fields:
+          - { name: read, label: Read, type: object, list: true, fields: *item-fields }
+          - { name: backlog, label: Backlog, type: object, list: true, fields: *item-fields }
+      - name: games
+        label: Video games
+        type: object
+        fields:
+          - { name: favorite, label: Favorite, type: object, fields: *favorite-fields }
+          - { name: shelf, label: Shelf, type: object, list: true, fields: *item-fields }
+      - name: music
+        label: Music
+        type: object
+        fields:
+          - name: playlist
+            label: Playlist
+            type: object
+            list: true
+            fields:
+              - { name: title, label: Album, type: string, required: true }
+              - { name: artist, label: Artist, type: string }
+              - { name: apple_music, label: Apple Music album id, type: number, description: "The number at the end of the album URL. Gives the cover and the link." }
+              - { name: image, label: Custom cover, type: image }
+              - { name: url, label: Custom link, type: string }
+
+  - name: projects
+    label: Projects
+    type: file
+    path: content/projects.yaml
+    format: yaml
+    fields:
+      - name: personal
+        label: Personal
+        type: object
+        list: true
+        fields: &project-fields
+          - { name: name, label: Name, type: string, required: true }
+          - { name: status, label: Status, type: select, options: { values: [Live, WIP, Discontinued, Abandoned] } }
+          - { name: link, label: Link, type: string, description: "A page of this site (/blog/...) or a full URL." }
+          - { name: tags, label: Tags, type: string, list: true }
+          - { name: description, label: Description, type: text }
+      - { name: school, label: School, type: object, list: true, fields: *project-fields }
+
+  - name: profile
+    label: Profile
+    type: file
+    path: content/profile.yaml
+    format: yaml
+    fields:
+      - { name: name, label: Name, type: string }
+      - { name: age, label: Age, type: number }
+      - { name: based_in, label: Based in, type: string }
+      - { name: class, label: Class, type: string }
+      - { name: os, label: OS, type: string }
+      - { name: learning, label: Learning, type: string }
+
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: content/blog
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, date]
+      sort: [date]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date }
+      - { name: jp, label: Japanese title, type: string, description: "One or two kanji shown on the paper strip, e.g. 錆 for Rust." }
+      - { name: description, label: Description, type: text }
+      - { name: tags, label: Tags, type: string, list: true }
+      - name: body
+        label: Post
+        type: rich-text
+        options:
+          format: markdown

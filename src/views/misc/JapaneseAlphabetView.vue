@@ -1,10 +1,10 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { ref, computed } from 'vue';
 import AboutBox from '@/components/boxes/AboutBox.vue';
-const route = useRoute();
+import PageTitle from '@/components/PageTitle.vue';
 
 const layout = ref('hiragana');
+const mode = ref('chart'); // 'chart' | 'quiz'
 const switchLayout = (newLayout) => { layout.value = newLayout; };
 
 const rows = [
@@ -22,39 +22,142 @@ const rows = [
 ];
 
 const alphabet = rows.flat();
+const kana = alphabet.filter(Boolean);
 
+const play = (char) => new Audio(`/audio/${char.romaji}.mp3`).play().catch(() => {});
+
+// Chart: the tapped card pops while its sound plays
+const popping = ref(null);
 const playKana = (char) => {
   if (!char) return;
-  const audio = new Audio(`/audio/${char.romaji}.mp3`);
-  audio.play();
+  popping.value = null;
+  requestAnimationFrame(() => (popping.value = char.romaji));
+  play(char);
 };
+
+// Quiz: hear a sound, pick the matching character
+const quiz = ref({ answer: null, choices: [], picked: [], solved: false });
+const score = ref({ good: 0, total: 0, streak: 0, best: 0 });
+
+const shuffle = (list) => [...list].sort(() => Math.random() - 0.5);
+
+const nextQuestion = () => {
+  const answer = kana[Math.floor(Math.random() * kana.length)];
+  const others = shuffle(kana.filter(k => k !== answer)).slice(0, 3);
+  quiz.value = { answer, choices: shuffle([answer, ...others]), picked: [], solved: false };
+  play(answer);
+};
+
+const pick = (choice) => {
+  const q = quiz.value;
+  if (q.solved || q.picked.includes(choice)) return;
+  q.picked.push(choice);
+
+  if (choice === q.answer) {
+    q.solved = true;
+    // Only a first-try answer counts as good
+    const firstTry = q.picked.length === 1;
+    score.value.total++;
+    if (firstTry) {
+      score.value.good++;
+      score.value.streak++;
+      score.value.best = Math.max(score.value.best, score.value.streak);
+    }
+    setTimeout(nextQuestion, 900);
+  } else {
+    score.value.streak = 0;
+  }
+};
+
+const choiceState = (choice) => {
+  const q = quiz.value;
+  if (!q.picked.includes(choice)) return 'idle';
+  return choice === q.answer ? 'right' : 'wrong';
+};
+
+const switchMode = (newMode) => {
+  mode.value = newMode;
+  if (newMode === 'quiz' && !quiz.value.answer) nextQuestion();
+};
+
+const accuracy = computed(() => score.value.total ? Math.round(score.value.good / score.value.total * 100) : 0);
 </script>
 
 <template>
-  <main class="flex flex-col gap-3">
-    <h1 class="highlight-title text-3xl -rotate-1">{{ route.name }}</h1>
-    <AboutBox>Tap on a card to hear a character pronunciation.</AboutBox>
+  <main>
+    <PageTitle>Every hiragana and katakana with its pronunciation. When you think you know them, try the quiz.</PageTitle>
 
-    <div class="flex gap-2">
-      <button :class="layout === 'hiragana' ? 'bg-orange-300' : 'bg-purple-200 opacity-50'"
-        class="font-bold text-sm uppercase border border-2 p-2 rounded flex-1 cursor-pointer"
-        @click="switchLayout('hiragana')">あ Hiragana</button>
-      <button :class="layout === 'katakana' ? 'bg-orange-300' : 'bg-purple-200 opacity-50'"
-        class="font-bold text-sm uppercase border border-2 p-2 rounded flex-1 cursor-pointer"
-        @click="switchLayout('katakana')">ア Katakana</button>
+    <div v-reveal class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex border border-line text-xs uppercase tracking-widest" role="group" aria-label="Script">
+        <button v-for="script in ['hiragana', 'katakana']" :key="script" type="button"
+          class="cursor-pointer px-4 py-2 transition-colors first:border-r first:border-line"
+          :class="layout === script ? 'bg-paper text-ink' : 'text-muted hover:text-paper'"
+          :aria-pressed="layout === script" @click="switchLayout(script)">
+          {{ script === 'hiragana' ? 'あ' : 'ア' }} {{ script }}
+        </button>
+      </div>
+      <div class="flex border border-line text-xs uppercase tracking-widest" role="group" aria-label="Mode">
+        <button v-for="m in ['chart', 'quiz']" :key="m" type="button"
+          class="cursor-pointer px-4 py-2 transition-colors first:border-r first:border-line"
+          :class="mode === m ? 'bg-accent text-paper' : 'text-muted hover:text-paper'"
+          :aria-pressed="mode === m" @click="switchMode(m)">{{ m }}</button>
+      </div>
     </div>
 
-    <ul class="grid grid-cols-5 gap-5 text-xl">
-      <li v-for="(char, index) in alphabet" :key="index"
-          :class="char ? 'solid-shadow-3 select-none cursor-pointer bg-white p-2 border border-2' : ''"
-          class="p-4 text-center flex flex-col items-center justify-center gap-1.5"
-          @click="playKana(char)">
-        <template v-if="char">
-          <span class="font-bold text-2xl">{{ char[layout] }}</span>
-          <span class="italic text-gray-600 text-sm">{{ char.romaji }}</span>
-          <i class="text-gray-600 text-sm fas fa-volume-up"></i>
-        </template>
-      </li>
-    </ul>
+    <AboutBox v-reveal="100" hideTitle class="mb-8">
+      <template v-if="mode === 'chart'">Tap a character to hear how it's pronounced.</template>
+      <template v-else>Listen to the sound, then pick the matching character. Only first tries count!</template>
+    </AboutBox>
+
+    <Transition name="page" mode="out-in">
+      <ul v-if="mode === 'chart'" key="chart" v-reveal.children class="grid grid-cols-5 gap-px border border-line bg-line">
+        <li v-for="(char, index) in alphabet" :key="index" class="bg-ink">
+          <button v-if="char" type="button" @click="playKana(char)" :aria-label="`Play ${char.romaji}`"
+            :class="{ pop: popping === char.romaji }" @animationend="popping = null"
+            class="group flex h-full w-full cursor-pointer select-none flex-col items-center justify-center gap-1 py-4 transition-colors hover:bg-white/5 sm:py-6">
+            <Transition name="flip" mode="out-in">
+              <span :key="layout" class="font-display text-3xl font-extrabold sm:text-4xl">{{ char[layout] }}</span>
+            </Transition>
+            <span class="text-xs text-muted group-hover:text-accent">{{ char.romaji }}</span>
+          </button>
+        </li>
+      </ul>
+
+      <section v-else key="quiz" class="flex flex-col gap-8 border border-line bg-ink-2 p-5 sm:p-8">
+        <div class="flex justify-between text-xs uppercase tracking-widest text-muted">
+          <span>Score <span class="text-paper">{{ score.good }}/{{ score.total }}</span> ({{ accuracy }}%)</span>
+          <span>
+            Streak <span :key="score.streak" class="inline-block text-accent" :class="{ pop: score.streak > 0 }">{{ score.streak }}</span>
+            · best {{ score.best }}
+          </span>
+        </div>
+
+        <button type="button" @click="play(quiz.answer)"
+          class="mx-auto flex cursor-pointer items-center gap-3 border border-accent px-6 py-4 text-sm uppercase tracking-widest transition-colors hover:bg-accent">
+          <span aria-hidden="true">▶</span> Play the sound again
+        </button>
+
+        <Transition name="page" mode="out-in">
+          <ul :key="quiz.answer?.romaji" class="grid grid-cols-2 gap-px border border-line bg-line">
+            <li v-for="choice in quiz.choices" :key="choice.romaji">
+              <button type="button" @click="pick(choice)" :disabled="quiz.solved && choiceState(choice) === 'idle'"
+                class="flex w-full cursor-pointer flex-col items-center gap-1 py-6 font-display text-5xl font-extrabold transition-colors disabled:cursor-default disabled:opacity-30"
+                :class="{
+                  'bg-ink hover:bg-white/5': choiceState(choice) === 'idle',
+                  'bg-paper text-ink pop': choiceState(choice) === 'right',
+                  'bg-accent/30 text-paper/50 shake line-through': choiceState(choice) === 'wrong',
+                }">
+                {{ choice[layout] }}
+                <span v-if="choiceState(choice) !== 'idle'" class="text-xs font-normal">{{ choice.romaji }}</span>
+              </button>
+            </li>
+          </ul>
+        </Transition>
+
+        <button type="button" @click="nextQuestion" class="mx-auto cursor-pointer text-xs uppercase tracking-widest text-muted hover:text-paper">
+          ↻ Skip
+        </button>
+      </section>
+    </Transition>
   </main>
 </template>

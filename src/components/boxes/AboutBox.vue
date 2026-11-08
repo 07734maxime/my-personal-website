@@ -1,16 +1,9 @@
+<!-- A side note, in a small system dialog -->
 <template>
-    <div class="solid-shadow-3 bg-white text-sm text-gray-600 border border-2 ">
-        <div v-if="!hideTitle" class="text-xs font-mono flex p-1 border-b border-b-2 justify-between">
-            {{ title }}
-            <div class="flex gap-1 items-center">
-                <hr class="p-0.5 border border-2" />
-                <hr class="p-0.5 border border-2 bg-black" />
-            </div>
-        </div>
-        <div class="p-1">
-            <slot></slot>
-        </div>
-    </div>
+    <aside class="border-2 border-cyan/60 bg-ink-2 px-5 py-4 text-sm leading-relaxed text-paper/80 shadow-[4px_4px_0_0_#000]">
+        <p v-if="!hideTitle" class="mb-2 font-display text-xs uppercase tracking-[0.2em] text-cyan">ⓘ {{ title }}</p>
+        <slot></slot>
+    </aside>
 </template>
 
 <script setup>
@@ -18,7 +11,7 @@
 defineProps({
     title: {
         type: String,
-        default: 'README.txt'
+        default: 'Note'
     },
     hideTitle: {
         type: Boolean,

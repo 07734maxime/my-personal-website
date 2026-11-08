@@ -1,5 +1,5 @@
 <template>
-    <div class="font-mono bg-gray-100 px-2 inline-block rounded-md text-sm">
+    <code class="whitespace-nowrap border border-line bg-ink-2 px-1.5 py-0.5 font-mono text-[0.85em] text-paper">
         <slot />
-    </div>
+    </code>
 </template>

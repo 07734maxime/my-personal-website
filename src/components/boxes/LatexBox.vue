@@ -1,17 +1,14 @@
 <script setup>
+import Latex from '@/components/Latex.vue';
+
 defineProps({
   label: { type: String, default: 'LaTeX' }
 });
 </script>
 
 <template>
-  <div class="relative bg-white p-1 border border-2 solid-shadow-3 rounded">
+  <figure class="relative overflow-x-auto border border-line bg-ink-2 px-4 py-2">
     <Latex :displayMode="true"><slot /></Latex>
-    <p class="text-sm text-gray-500/50 m-2 absolute bottom-0 right-0">{{ label }}</p>
-  </div>
+    <figcaption class="absolute bottom-2 right-3 text-[10px] uppercase tracking-widest text-muted">{{ label }}</figcaption>
+  </figure>
 </template>
-
-<script>
-import Latex from '@/components/Latex.vue';
-export default { components: { Latex } };
-</script>

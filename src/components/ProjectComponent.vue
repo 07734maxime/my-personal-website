@@ -1,38 +1,42 @@
+<!-- One project as a row of the file list; the row inverts on hover -->
 <script setup>
+import { computed } from 'vue';
+import { toKanji } from '@/composables/episodes';
 
-defineProps({
+const props = defineProps({
+  // { name: String, tags: [{ name }], link?: String, status?: String }
   project: {
-    name: String,
-    tags: Array,
-    link: String,
+    type: Object,
+    required: true
+  },
+  index: {
+    type: Number,
     required: true
   }
 });
 
+const number = computed(() => toKanji(props.index));
 </script>
 
 <template>
-    <section class="solid-shadow-5 text-justify font-mono border border-2 bg-purple-300 transition-all duration-150 cursor-pointer hover:scale-99" >
-      <div class="flex bg-purple-400 p-1 border-b border-b-2 justify-between">
-        <div class="flex gap-1">
-          <hr class="h-2 w-2 bg-red-500 border-none" />
-          <hr class="h-2 w-2 bg-orange-400 border-none" />
-          <hr class="h-2 w-2 bg-yellow-300 border-none" />
-        </div>
-          <hr class="h-2 w-2 border border-2" />
-          </div>
-          <div class="p-1">
-            <h2 class="m-0 text-md">{{ project.name }}</h2>
-            <ul class="flex gap-2 flex-wrap">
-              <li v-for="tag in project.tags" :key="tag" :class="tag.color" class="text-sm text-white w-fit p-1 font-bold">
-                {{ tag.name }}
-              </li>
-            </ul>
-            <slot></slot>
-          </div>
-          <div v-if="project.link" class="my-3 flex justify-center">
-            <RouterLink :to="project.link" class="bg-black transition-all duration-50 hover:bg-neutral-800 text-white p-1 font-bold">More
-              Info</RouterLink :to="project.link">
-          </div>
-    </section>
+  <component :is="project.link ? 'RouterLink' : 'article'" :to="project.link"
+    class="group grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-2 border-t border-line px-2 py-6 transition-colors duration-300 hover:bg-white/5 sm:grid-cols-[3rem_minmax(0,1fr)_auto]">
+    <span class="font-display text-2xl font-extrabold text-accent">{{ number }}</span>
+
+    <div class="flex flex-col gap-2">
+      <h3 class="text-xl text-accent">{{ project.name }}</h3>
+      <div class="text-paper/70 transition-colors">
+        <slot></slot>
+      </div>
+      <ul class="flex flex-wrap gap-x-3 text-xs uppercase tracking-widest text-muted">
+        <li v-for="tag in project.tags" :key="tag.name">{{ tag.name }}</li>
+      </ul>
+    </div>
+
+    <div class="col-start-2 flex items-start gap-3 text-xs uppercase tracking-widest sm:col-start-3 sm:flex-col sm:items-end sm:pt-2">
+      <span v-if="project.status" class="border border-current px-2 py-0.5"
+        :class="['Abandoned', 'Discontinued'].includes(project.status) ? 'text-muted line-through' : 'text-accent'">{{ project.status }}</span>
+      <span v-if="project.link" class="transition-transform duration-300 group-hover:translate-x-1">Read →</span>
+    </div>
+  </component>
 </template>
