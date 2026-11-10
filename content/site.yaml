@@ -1,0 +1,9 @@
+name: Maxime
+home_tab_title: Maxime — 0.7734
+description: "Maxime's personal website: projects and hobbies."
+footer: Maxime (0.7734) · 2025–2026 · plain HTML, no CSS
+contact:
+  - { label: Email, url: "mailto:07734maxime@proton.me" }
+  - { label: GitHub, url: "https://github.com/07734maxime" }
+  - { label: Discord, url: "https://discord.com/users/680737784730091522" }
+  - { label: Source, url: "https://github.com/07734maxime/my-personal-website" }

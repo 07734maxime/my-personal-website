@@ -1,0 +1,32 @@
+title: Dev
+intro: My setup, and a log of what I've been working on.
+
+setup:
+  heading: Setup
+  groups:
+    - heading: System
+      items:
+        - { name: NixOS, details: The OS on my machine., url: "https://nixos.org/" }
+    - heading: Languages
+      items:
+        - { name: Rust, details: Learning it with a linear algebra library. }
+        - { name: C++, details: For school projects. }
+        - { name: JavaScript, details: "Node.js, and this website's build script." }
+    - heading: This website
+      items:
+        - { name: Vercel, details: Hosts it and rebuilds it on every change., url: "https://vercel.com/" }
+        - { name: is-a.dev, details: The free domain name., url: "https://is-a.dev/" }
+        - { name: Pages CMS, details: Where I edit the content., url: "https://pagescms.org/" }
+    - heading: Ye Player
+      items:
+        - { name: Ye Player, details: "A webapp to listen to Ye's (FKA Kanye West) unreleased music.", url: "https://yeplayer.net/" }
+        - { name: Made with, details: "Vue.js, Tailwind CSS, HTML" }
+        - { name: Content, details: "Hosts no content: the music comes from [yetracker.net](https://yetracker.net/)." }
+
+log:
+  heading: Dev log
+  entries:
+    - { date: 2026-11-10, text: "Rebuilt this website as plain HTML: no CSS, no framework, every word editable in YAML." }
+    - { date: 2026-11-08, text: Revamped the website and changed the content. }
+    - { date: 2026-07-03, text: Started redesigning every page of this website. }
+    - { date: 2024-11-12, text: First version of this website. }

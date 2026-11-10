@@ -1,0 +1,34 @@
+title: Maxime
+intro: >-
+  A 20-year-old apprentice programmer from France. I study engineering, run NixOS,
+  and I'm learning Japanese, one kana at a time.
+avatar: /assets/img/avatar.png
+status:
+  heading: Status
+  rows:
+    - { label: Name, value: Maxime }
+    - { label: Age, value: "20" }
+    - { label: Based in, value: France }
+    - { label: Class, value: Apprentice programmer · Engineering student }
+    - { label: OS, value: NixOS }
+    - { label: Learning, value: 日本語 (JLPT N5) }
+    - { label: Sanity, value: 70/100 (read Saya no Uta) }
+sections:
+  - heading: About me
+    body: |
+      I'm currently studying engineering, and I'd like to specialize in computer science because it's what I'm
+      passionate about.
+
+      It's not the only thing I love though. I rarely play video games these days, and I'm trying to quit competitive
+      ones, but I still love single-player and indie games, especially the strange and unsettling kind.
+      You'll find them in [Hobbies](/hobbies).
+
+      I also love anime, manga, light novels and visual novels. I don't have much time for them lately, but they still
+      hold a special place in my heart. I'd like to visit Japan one day, so I'm learning Japanese.
+
+      はじめまして！
+  - heading: This website
+    body: |
+      A personal project to have a place where I can share my interests and hobbies with the world.
+      It's plain HTML with no CSS, generated from YAML files by a small Node script.
+      Its source code is [on GitHub](https://github.com/07734maxime/my-personal-website).

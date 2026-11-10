@@ -1,32 +1,40 @@
-# Projects page. `status` is one of: Live, WIP, Discontinued, Abandoned (or leave it out).
-# `link` can point to a page of this site, like a blog post (/blog/rust-impressions).
+title: Projects
+intro: Some of my personal and school projects. Finished, unfinished, and honestly abandoned. I'll add more as I go along.
 
-personal:
-  - name: Initialization to Rust
-    link: /blog/rust-impressions
-    status: Discontinued
-    tags: [Rust, Linear algebra]
-    description: My first project in Rust! I tried to implement linear algebra operations.
-  - name: This website
-    status: Live
-    tags: [Vue, Tailwind]
-    description: The website you are currently on.
-  - name: Yepi
-    status: Abandoned
-    tags: [Node.js, Express]
-    description: An app to listen to music.
-  - name: Unnamed
-    status: Abandoned
-    tags: [Electron]
-    description: An app to create color palettes.
+sections:
+  - heading: Personal
+    projects:
+      - name: Initialization to Rust
+        status: Discontinued
+        tags: [Rust, Linear algebra]
+        description: My first project in Rust! I tried to implement linear algebra operations.
+      - name: This website
+        status: Live
+        tags: [HTML, Node.js]
+        description: The website you are currently on.
+      - name: Yepi
+        status: Abandoned
+        tags: [Node.js, Express]
+        description: An app to listen to music.
+      - name: Ye Player
+        link: https://yeplayer.net/
+        status: Live
+        tags: [Vue.js, Tailwind CSS, HTML]
+        description: The successor of Yepi. A webapp to listen to Ye (FKA Kanye West) unreleased music.
+      - name: Unnamed
+        status: Abandoned
+        tags: [Electron]
+        description: An app to create color palettes.
 
-school:
-  - name: S101
-    tags: [C++, Doxygen]
-    description: A "Pac-Man" style game that runs in the shell.
-  - name: R102
-    tags: [HTML, CSS]
-    description: A website to showcase albums and songs from a music band.
-  - name: S102
-    tags: [C++]
-    description: "Implementing voting systems: Borda count, two-round system, and one-round system."
+  - heading: School
+    intro: Related to my academic work. The ideas behind them weren't mine.
+    projects:
+      - name: S101
+        tags: [C++, Doxygen]
+        description: A "Pac-Man" style game that runs in the shell.
+      - name: R102
+        tags: [HTML, CSS]
+        description: A website to showcase albums and songs from a music band.
+      - name: S102
+        tags: [C++]
+        description: "Implementing voting systems: Borda count, two-round system, and one-round system."

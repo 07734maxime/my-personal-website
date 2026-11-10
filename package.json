@@ -5,27 +5,15 @@
   "type": "module",
   "scripts": {
     "covers": "node scripts/fetch-covers.js",
-    "dev": "npm run covers; vite",
-    "build": "npm run covers; vite build",
-    "preview": "vite preview"
+    "build": "npm run covers; node scripts/build.js",
+    "dev": "npm run build && node scripts/serve.js"
   },
   "dependencies": {
-    "@shikijs/langs": "^4.3.0",
-    "@shikijs/themes": "^4.3.0",
-    "@tailwindcss/vite": "^4.3.1",
-    "katex": "^0.17.0",
     "markdown-it": "^15.0.3",
-    "shiki": "^4.3.0",
-    "tailwindcss": "^4.3.1",
-    "vue": "^3.5.38",
-    "vue-router": "^5.1.0",
     "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.7",
-    "sharp": "^0.35.5",
-    "vite": "^8.0.16",
-    "vite-plugin-vue-devtools": "^8.1.2"
+    "sharp": "^0.35.5"
   },
   "engines": {
     "node": "^22.18.0 || >=24.12.0"

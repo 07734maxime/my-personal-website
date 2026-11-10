@@ -1,10 +1,7 @@
-// Downloads the cover of every item in content/hobbies.yaml that has an id but no `image`,
-// into public/assets/img/covers/<source>-<id>.webp. Covers already on disk are skipped, so this is
-// cheap to run before every dev/build. Network errors only warn: the site falls back to a floppy disk.
 import { readFile, mkdir, access, writeFile } from 'node:fs/promises';
 import { parse } from 'yaml';
 import sharp from 'sharp';
-import { coverKey } from '../src/content/sources.js';
+import { coverKey } from './sources.js';
 
 const OUT = new URL('../public/assets/img/covers/', import.meta.url);
 const UA = { 'User-Agent': 'maxime-website cover fetcher (https://hello.is-a.dev)' };
@@ -28,7 +25,6 @@ const vndb = async (id) => {
     body: JSON.stringify({ filters: ['id', '=', id], fields: 'image.url,image.sexual' }),
   });
   const image = (await res.json()).results?.[0]?.image;
-  // Skip covers VNDB flags as explicit
   return image && image.sexual < 1.5 ? image.url : null;
 };
 
@@ -44,8 +40,6 @@ const COVER_URL = {
   steam: async (id) => `https://shared.steamstatic.com/store_item_assets/steam/apps/${id}/library_600x900.jpg`,
   apple_music: (id) => appleMusic(id),
 };
-
-// Every item of every list, wherever it sits in the file
 const collect = (node, out = []) => {
   if (Array.isArray(node)) node.forEach((n) => collect(n, out));
   else if (node && typeof node === 'object') {
@@ -57,7 +51,7 @@ const collect = (node, out = []) => {
 
 const exists = (url) => access(url).then(() => true, () => false);
 
-const items = collect(parse(await readFile(new URL('../content/hobbies.yaml', import.meta.url), 'utf8')));
+const items = collect(parse(await readFile(new URL('../content/hobbies.yaml', import.meta.url), 'utf8')).sections);
 await mkdir(OUT, { recursive: true });
 
 let fetched = 0;
