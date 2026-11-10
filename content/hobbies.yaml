@@ -1,89 +1,176 @@
 title: Hobbies
-intro: What I watch, read, play and listen to. Mostly strange, sometimes dark, always memorable.
-
 sections:
   - heading: Anime, manga & light novels
     favorite:
-      title: "Re:ZERO"
+      title: Re:ZERO
+      note: This is probably the best isekai I've ever watched
       mal_manga: 74697
       image: /assets/img/anime/rezero.webp
-      note: "Just read it, you'll understand why."
     lists:
       - heading: Shelf
         items:
-          - { title: Monogatari Series, mal_anime: 5081, image: /assets/img/anime/monogatari.webp }
-          - { title: Clannad, mal_anime: 2167, image: /assets/img/anime/clannad.webp }
-          - { title: "Cyberpunk: Edgerunners", mal_anime: 42310, image: /assets/img/anime/cyberpunk_edgerunners.webp }
-          - { title: Monster, mal_anime: 19, image: /assets/img/anime/monster.webp }
-          - { title: Oshi no Ko, mal_anime: 52034, image: /assets/img/anime/oshi_no_ko.webp }
-          - { title: Evangelion, mal_anime: 30, image: /assets/img/anime/evangelion.webp }
-          - { title: Attack on Titan, mal_anime: 16498, image: /assets/img/anime/aot.webp }
-          - { title: Berserk, mal_manga: 2, image: /assets/img/manga/berserk.webp }
-          - { title: "20th Century Boys", mal_manga: 3, image: /assets/img/manga/20th_century_boys.webp }
-          - { title: Fullmetal Alchemist, mal_manga: 25, image: /assets/img/manga/fma.webp }
-          - { title: Vagabond, mal_manga: 656, image: /assets/img/manga/vagabond.webp }
-          - { title: JoJo's Bizarre Adventure, mal_manga: 1517, image: /assets/img/manga/jjba.webp }
-          - { title: Gnosia, mal_anime: 60427 }
+          - title: Monogatari Series
+            mal_anime: 5081
+            image: /assets/img/anime/monogatari.webp
+          - title: Clannad
+            mal_anime: 2167
+            image: /assets/img/anime/clannad.webp
+          - title: "Cyberpunk: Edgerunners"
+            mal_anime: 42310
+            image: /assets/img/anime/cyberpunk_edgerunners.webp
+          - title: Monster
+            mal_anime: 19
+            image: /assets/img/anime/monster.webp
+          - title: Oshi no Ko
+            mal_anime: 52034
+            image: /assets/img/anime/oshi_no_ko.webp
+          - title: Evangelion
+            mal_anime: 30
+            image: /assets/img/anime/evangelion.webp
+          - title: Attack on Titan
+            mal_anime: 16498
+            image: /assets/img/anime/aot.webp
+          - title: Berserk
+            mal_manga: 2
+            image: /assets/img/manga/berserk.webp
+          - title: 20th Century Boys
+            mal_manga: 3
+            image: /assets/img/manga/20th_century_boys.webp
+          - title: Fullmetal Alchemist
+            mal_manga: 25
+            image: /assets/img/manga/fma.webp
+          - title: Vagabond
+            mal_manga: 656
+            image: /assets/img/manga/vagabond.webp
+          - title: JoJo's Bizarre Adventure
+            mal_manga: 1517
+            image: /assets/img/manga/jjba.webp
+          - title: Gnosia
+            mal_anime: 60427
+          - title: Erased
+            mal_anime: 31043
       - heading: Up next
         items:
-          - { title: Erased, mal_anime: 31043, image: /assets/img/anime/erased.webp }
-          - { title: Made in Abyss, mal_anime: 34599, image: /assets/img/anime/made_in_abyss.webp }
-          - { title: Anohana, mal_anime: 9989, image: /assets/img/anime/anohana.webp }
-          - { title: Violet Evergarden, mal_anime: 33352, image: /assets/img/anime/violet_evergarden.webp }
-          - { title: Katanagatari, mal_anime: 6594, image: /assets/img/anime/katanagatari.webp }
-          - { title: Madoka Magica, mal_anime: 9756, image: /assets/img/anime/madoka_magica.webp }
-    outro: My full list is on [MyAnimeList](https://myanimelist.net/animelist/maxime07734) (even though it's outdated).
-
+          - title: Made in Abyss
+            mal_anime: 34599
+            image: /assets/img/anime/made_in_abyss.webp
+          - title: Anohana
+            mal_anime: 9989
+            image: /assets/img/anime/anohana.webp
+          - title: Violet Evergarden
+            mal_anime: 33352
+            image: /assets/img/anime/violet_evergarden.webp
+          - title: Katanagatari
+            mal_anime: 6594
+            image: /assets/img/anime/katanagatari.webp
+          - title: Madoka Magica
+            mal_anime: 9756
+            image: /assets/img/anime/madoka_magica.webp
   - heading: Visual novels
-    intro: Proud visual novel enjoyer. I've only finished a couple so far, but the backlog is getting serious.
     lists:
       - heading: Read
         items:
-          - { title: Saya no Uta, vndb: v97, image: /assets/img/games/saya_no_uta.webp }
-          - { title: Clannad, vndb: v4, image: /assets/img/novels/clannad.webp }
+          - title: Saya no Uta
+            vndb: v97
+            image: /assets/img/games/saya_no_uta.webp
+          - title: Clannad
+            vndb: v4
+            image: /assets/img/novels/clannad.webp
       - heading: Backlog
         items:
-          - { title: The House in Fata Morgana, vndb: v12402, image: /assets/img/games/the_house_in_fata_morgana.webp }
-          - { title: Kanon, vndb: v33, image: /assets/img/novels/kanon.webp }
-          - { title: Air, vndb: v36, image: /assets/img/novels/air.webp }
-          - { title: Little Busters!, vndb: v5, image: /assets/img/novels/little_busters.webp }
-          - { title: Tsukihime, vndb: v7, image: /assets/img/novels/tsukihime.webp }
-          - { title: Fate/stay night, vndb: v11, image: /assets/img/novels/fate_stay_night.webp }
-          - { title: Higurashi, vndb: v67, image: /assets/img/novels/higurashi.webp }
-          - { title: Umineko, vndb: v24, image: /assets/img/novels/umineko.webp }
-          - { title: "Steins;Gate", vndb: v2002, image: /assets/img/novels/steins_gate.webp }
-          - { title: Ever17, vndb: v17, image: /assets/img/novels/ever17.webp }
-
+          - title: The House in Fata Morgana
+            vndb: v12402
+            image: /assets/img/games/the_house_in_fata_morgana.webp
+          - title: Kanon
+            vndb: v33
+            image: /assets/img/novels/kanon.webp
+          - title: Air
+            vndb: v36
+            image: /assets/img/novels/air.webp
+          - title: Little Busters!
+            vndb: v5
+            image: /assets/img/novels/little_busters.webp
+          - title: Tsukihime
+            vndb: v7
+            image: /assets/img/novels/tsukihime.webp
+          - title: Fate/stay night
+            vndb: v11
+            image: /assets/img/novels/fate_stay_night.webp
+          - title: Higurashi
+            vndb: v67
+            image: /assets/img/novels/higurashi.webp
+          - title: Umineko
+            vndb: v24
+            image: /assets/img/novels/umineko.webp
+          - title: Steins;Gate
+            vndb: v2002
+            image: /assets/img/novels/steins_gate.webp
+          - title: Ever17
+            vndb: v17
+            image: /assets/img/novels/ever17.webp
   - heading: Video games
     favorite:
       title: Cyberpunk 2077
+      note: Time to party like it's 2023.
       steam: 1091500
       image: /assets/img/games/cyberpunk_2077.webp
-      note: Time to party like it's 2023.
     lists:
       - heading: Shelf
         items:
-          - { title: Minecraft, image: /assets/img/music/minecraft_volume_alpha.webp, url: "https://www.minecraft.net/" }
-          - { title: Yume Nikki, steam: 650700, image: /assets/img/games/yume_nikki.webp }
-          - { title: "Yume Nikki fangames (Yume 2kki, .flow…)", image: /assets/img/games/yume_2kki.webp, url: "https://yume2kki.fandom.com/" }
-          - { title: Silent Hill 2, image: /assets/img/games/silent_hill_2.webp, url: "https://en.wikipedia.org/wiki/Silent_Hill_2" }
-          - { title: Ib, steam: 1901370, image: /assets/img/games/ib.webp }
-          - { title: Ao Oni, image: /assets/img/games/ao_oni.webp, url: "https://en.wikipedia.org/wiki/Ao_Oni" }
-    outro: "Basically anything that feels like a bad dream: Yume Nikki-likes, Silent Hill, RPG Maker horror."
-
+          - title: Minecraft
+            image: /assets/img/music/minecraft_volume_alpha.webp
+            url: https://www.minecraft.net/
+          - title: Yume Nikki
+            steam: 650700
+            image: /assets/img/games/yume_nikki.webp
+          - title: Yume Nikki fangames (Yume 2kki, .flow…)
+            image: /assets/img/games/yume_2kki.webp
+            url: https://yume2kki.fandom.com/
+          - title: Silent Hill 2
+            image: /assets/img/games/silent_hill_2.webp
+            url: https://en.wikipedia.org/wiki/Silent_Hill_2
+          - title: Ib
+            steam: 1901370
+            image: /assets/img/games/ib.webp
+          - title: Ao Oni
+            image: /assets/img/games/ao_oni.webp
+            url: https://en.wikipedia.org/wiki/Ao_Oni
+    outro: "Basically anything that feels like a bad dream: Yume Nikki-likes, Silent
+      Hill, RPG Maker horror."
   - heading: Music
     intro: "I honestly listen to all kinds of music. Currently on rotation:"
     lists:
       - heading: Playlist
         items:
-          - { title: Yeezus, artist: Kanye West, image: /assets/img/music/yeezus.webp, url: "https://en.wikipedia.org/wiki/Yeezus" }
-          - { title: Drukqs, artist: Aphex Twin, apple_music: 282559693, image: /assets/img/music/drukqs.webp }
-          - { title: Gusare, artist: "ZUTOMAYO (ずっと真夜中でいいのに。)", apple_music: 1548835870, image: /assets/img/music/gusare.webp }
-          - { title: Dummy, artist: Portishead, apple_music: 1440653096, image: /assets/img/music/dummy.webp }
-          - { title: "2014 Forest Hills Drive", artist: J. Cole, apple_music: 1600772499, image: /assets/img/music/2014_forest_hills_drive.webp }
-          - { title: .RAW-Z, artist: Laylow, apple_music: 1668815424, image: /assets/img/music/raw_z.webp }
-          - { title: summer flows 0.02, artist: wave to earth, apple_music: 1781856626, image: /assets/img/music/summer_flows_0_02.webp }
-    outro: >-
-      I also love soundtracks and calm, ambient stuff, the kind you put on to work or fall asleep.
-      C418's [Minecraft – Volume Alpha](https://music.apple.com/fr/album/minecraft-volume-alpha/1867885113)
+          - title: Yeezus
+            artist: Kanye West
+            image: /assets/img/music/yeezus.webp
+            url: https://en.wikipedia.org/wiki/Yeezus
+          - title: Drukqs
+            artist: Aphex Twin
+            apple_music: 282559693
+            image: /assets/img/music/drukqs.webp
+          - title: Gusare
+            artist: ZUTOMAYO (ずっと真夜中でいいのに。)
+            apple_music: 1548835870
+            image: /assets/img/music/gusare.webp
+          - title: Dummy
+            artist: Portishead
+            apple_music: 1440653096
+            image: /assets/img/music/dummy.webp
+          - title: 2014 Forest Hills Drive
+            artist: J. Cole
+            apple_music: 1600772499
+            image: /assets/img/music/2014_forest_hills_drive.webp
+          - title: .RAW-Z
+            artist: Laylow
+            apple_music: 1668815424
+            image: /assets/img/music/raw_z.webp
+          - title: summer flows 0.02
+            artist: wave to earth
+            apple_music: 1781856626
+            image: /assets/img/music/summer_flows_0_02.webp
+    outro: I also love soundtracks and calm, ambient stuff, the kind you put on to
+      work or fall asleep. C418's [Minecraft – Volume
+      Alpha](https://music.apple.com/fr/album/minecraft-volume-alpha/1867885113)
       is the perfect example.
