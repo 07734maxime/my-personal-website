@@ -11,14 +11,10 @@ status:
       value: "20"
     - label: Based in
       value: France
-    - label: Class
-      value: Apprentice programmer · Engineering student
     - label: OS
       value: NixOS
     - label: Learning
       value: 日本語 (JLPT N5)
-    - label: Sanity
-      value: 70/100 (read Saya no Uta)
 sections:
   - heading: About me
     body: >-
