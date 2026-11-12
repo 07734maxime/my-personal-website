@@ -1,10 +1,7 @@
-# HELLO
+# hello.is-a.dev
 
-[VISIT hello.is-a.dev VISIT VISIT VISIT IT](https://hello.is-a.dev)
-fOR any QUESTIONS MAIL ME. I WILL REPLY SHORTLY : [CLICK HERE](https://hello.is-a.dev)
+My personal website. Ive decided to go to a simple pure html website. I might change it soon, again
 
-THANKS [is-a.dev](https://is-a.dev) FOR DOMAIN. HOSTED ON vercel
+Personal thanks to [is-a.dev](https://is-a.dev) for the free domain name.
 
----
-
-STILL MADE BY HEART. MAXIME.
+Hosted on [Vercel](https://vercel.com). Content edited on [PageCMS](https://pagescms.org/)
